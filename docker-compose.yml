@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080/api
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL}
+      - DYNATRACE_API_TOKEN=${DYNATRACE_API_TOKEN}
+
+  mcp-server:
+    build:
+      context: .
+      dockerfile: mcp-server/Dockerfile
+    environment:
+      - DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL}
+      - DYNATRACE_API_TOKEN=${DYNATRACE_API_TOKEN}
+
+  # Local OpenTelemetry Collector for testing Bindplane pipelines locally
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    volumes:
+      - ./infra/bindplane/pipeline.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318" # OTLP HTTP receiver
+    environment:
+      - DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL}
+      - DYNATRACE_API_TOKEN=${DYNATRACE_API_TOKEN}

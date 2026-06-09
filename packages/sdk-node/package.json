@@ -1,0 +1,18 @@
+{
+  "name": "@bruce/sdk-node",
+  "version": "1.0.0",
+  "description": "Bruce OpenTelemetry SDK for Node.js agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/sdk-node": "^0.51.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

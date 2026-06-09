@@ -1,0 +1,18 @@
+{
+  "name": "@bruce/mcp-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MCP Server for Dynatrace observability",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "@types/node": "^20.0.0"
+  }
+}
