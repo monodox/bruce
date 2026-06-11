@@ -1,5 +1,9 @@
 # Bruce
 
+<p align="center">
+  <img src="public/logo.png" alt="Bruce Logo" width="200" />
+</p>
+
 **Bruce** is an open-source AI Observability Copilot that watches your AI agents in production — detecting anomalies, diagnosing root causes, and generating fix playbooks automatically, so your agents behave the way you expect, at every scale.
 
 Built with [Google Cloud Agent Builder](https://cloud.google.com/products/agent-builder) + Gemini, powered by [Dynatrace](https://www.dynatrace.com/) via Model Context Protocol (MCP).
