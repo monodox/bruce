@@ -1,21 +1,38 @@
 'use client'
 
-import { Moon, Sun } from 'lucide-react'
+import { Moon, Sun, Monitor } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
-export function ThemeToggle() {
-  const { setTheme, resolvedTheme } = useTheme()
+interface ThemeToggleProps {
+  collapsed?: boolean
+}
+
+export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
+  const { setTheme, theme } = useTheme()
+
+  const cycle = () => {
+    if (theme === 'dark') setTheme('system')
+    else if (theme === 'system') setTheme('light')
+    else setTheme('dark')
+  }
+
+  const label = theme === 'dark' ? 'Dark' : theme === 'system' ? 'System' : 'Light'
 
   return (
     <Button
       variant="ghost"
-      size="icon"
-      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      aria-label="Toggle theme"
+      size={collapsed ? 'icon' : 'sm'}
+      onClick={cycle}
+      title={collapsed ? label : undefined}
+      className={cn(!collapsed && 'w-full justify-start gap-2')}
+      aria-label={`Theme: ${label}`}
     >
-      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      {theme === 'dark' && <Moon className="h-4 w-4 shrink-0" />}
+      {theme === 'system' && <Monitor className="h-4 w-4 shrink-0" />}
+      {theme !== 'dark' && theme !== 'system' && <Sun className="h-4 w-4 shrink-0" />}
+      {!collapsed && <span>{label}</span>}
     </Button>
   )
 }
