@@ -4,30 +4,29 @@ The web console for [Bruce](https://github.com/monodox/bruce) — an open-source
 
 ## Tech Stack
 
-- **Framework:** Next.js 14 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
+- **Framework:** Next.js 16 (App Router, Turbopack)
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS v4
 - **UI Components:** shadcn/ui
 - **Icons:** Lucide React
+- **Theming:** next-themes (dark / light / system)
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 24+
-- pnpm 10+
+- npm
 
 ### Installation
 
 ```bash
-# From the monorepo root
 git clone https://github.com/monodox/bruce.git
-cd bruce
-pnpm install
+cd bruce/frontend
 
-# Or run frontend only
-cd frontend
-pnpm dev
+npm install
+cp .env.example .env.local
+npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -36,31 +35,54 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Command | Description |
 |---------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
-| `pnpm lint` | Run ESLint |
+| `npm run dev` | Start development server (Turbopack) |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── auth/           # Login, signup, forgot & reset password
-│   ├── console/        # Main app console (overview, agents, alerts, anomalies, diagnose, playbooks, settings, tokens, traces)
-│   ├── legal/          # Terms, cookies, privacy
-│   ├── layout.tsx      # Root layout
-│   └── page.tsx        # Redirects to /auth/login
+│   ├── auth/              # Auth flow (login, signup, forgot, reset)
+│   ├── console/           # Main console (all operational pages)
+│   ├── legal/             # Legal pages (terms, cookies, privacy)
+│   ├── globals.css        # Theme tokens & Tailwind imports
+│   ├── layout.tsx         # Root layout (ThemeProvider, fonts)
+│   └── page.tsx           # Root redirect → /auth/login
 ├── components/
-│   ├── ui/             # shadcn/ui primitives
-│   ├── app-layout.tsx  # Header + footer layout (auth, legal)
-│   ├── app-header.tsx  # Site header
-│   ├── app-footer.tsx  # Site footer
-│   ├── console-layout.tsx   # Sidebar + header layout (console)
-│   ├── console-header.tsx   # Console header
-│   └── console-sidebar.tsx  # Console sidebar
+│   ├── app/               # App shell (header, footer, layout)
+│   │   ├── app-layout.tsx
+│   │   ├── app-header.tsx
+│   │   ├── app-footer.tsx
+│   │   └── index.ts
+│   ├── console/           # Console shell (sidebar, header, layout, context)
+│   │   ├── console-layout.tsx
+│   │   ├── console-header.tsx
+│   │   ├── console-sidebar.tsx
+│   │   ├── console-context.tsx
+│   │   └── index.ts
+│   ├── shared/            # Shared components used across app & console
+│   │   ├── app-icon.tsx          # Theme-aware app logo
+│   │   ├── command-search.tsx    # Universal search (⌘K / Ctrl+K)
+│   │   ├── theme-provider.tsx    # next-themes wrapper
+│   │   └── theme-toggle.tsx      # Dark/System/Light cycle toggle
+│   └── ui/                # shadcn/ui primitives
+│       ├── avatar.tsx
+│       ├── badge.tsx
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── input.tsx
+│       ├── label.tsx
+│       ├── progress.tsx
+│       ├── separator.tsx
+│       ├── skeleton.tsx
+│       ├── table.tsx
+│       ├── tabs.tsx
+│       └── textarea.tsx
 └── lib/
-    └── utils.ts        # Utility functions (cn helper)
+    └── utils.ts           # cn() utility
 ```
 
 ## Routes
@@ -68,22 +90,47 @@ src/
 | Route | Description |
 |-------|-------------|
 | `/` | Redirects to `/auth/login` |
-| `/auth/login` | Login page |
-| `/auth/signup` | Sign up page |
-| `/auth/forgot` | Forgot password |
-| `/auth/reset` | Reset password |
-| `/console/overview` | Dashboard overview |
+| `/auth/login` | Sign in |
+| `/auth/signup` | Create account |
+| `/auth/forgot` | Request password reset |
+| `/auth/reset` | Set new password |
+| `/console` | Redirects to `/console/overview` |
+| `/console/overview` | System dashboard |
 | `/console/agents` | Agent management |
-| `/console/alerts` | Alert rules |
+| `/console/alerts` | Alert rules & active alerts |
 | `/console/anomalies` | Anomaly detection |
 | `/console/diagnose` | Root cause analysis |
-| `/console/playbooks` | Automated fix playbooks |
-| `/console/settings` | App settings |
-| `/console/tokens` | API tokens |
-| `/console/traces` | Distributed traces |
+| `/console/playbooks` | Automated response workflows |
+| `/console/settings` | Workspace settings |
+| `/console/tokens` | API token management |
+| `/console/traces` | Distributed trace explorer |
+| `/legal` | Redirects to `/legal/terms` |
 | `/legal/terms` | Terms of service |
 | `/legal/cookies` | Cookie policy |
 | `/legal/privacy` | Privacy policy |
+
+## Features
+
+- **Responsive** — fully responsive for mobile, tablet, and desktop
+- **Collapsible sidebar** — defaults to collapsed (icons only), expands on click, auto-collapses on navigation
+- **Universal search** — press ⌘K / Ctrl+K to search and navigate pages instantly
+- **Theme switching** — cycles through Dark → System → Light with icon + label
+- **Fixed header & sidebar** — only the page content scrolls
+- **Skeleton loading** — all console pages show skeleton placeholders (ready for data fetching)
+- **Theme-aware logo** — uses `icon-light.png` in dark mode, `icon-dark.png` in light mode
+- **Favicon** — uses `public/favicon.png`
+- **Title template** — all pages render as `Page Name | Bruce`
+
+## Configuration
+
+| File | Purpose |
+|------|---------|
+| `.env.local` | Environment variables (API URL, etc.) |
+| `components.json` | shadcn/ui configuration |
+| `postcss.config.mjs` | PostCSS (Tailwind v4 plugin) |
+| `next.config.mjs` | Next.js settings |
+| `tsconfig.json` | TypeScript config with `@/` path alias |
+| `.npmrc` | npm audit level set to `high` |
 
 ## Contributing
 
