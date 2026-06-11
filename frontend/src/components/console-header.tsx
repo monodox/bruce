@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { Menu, Bell, User, LogOut, Shield } from 'lucide-react'
+import { Menu, Bell, User, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { AppIcon } from '@/components/shared/app-icon'
 
 export function ConsoleHeader() {
   return (
@@ -14,7 +15,7 @@ export function ConsoleHeader() {
           <span className="sr-only">Toggle menu</span>
         </Button>
         <Link href="/console/overview" className="flex items-center gap-2 md:hidden">
-          <Shield className="h-5 w-5 text-primary" />
+          <AppIcon size={20} />
           <span className="font-bold">Bruce</span>
         </Link>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 
-import { Shield } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import { useTheme } from 'next-themes'
 
 interface AppIconProps {
   size?: number
@@ -9,10 +9,16 @@ interface AppIconProps {
 }
 
 export function AppIcon({ size = 32, className }: AppIconProps) {
+  const { resolvedTheme } = useTheme()
+
   return (
-    <Shield
-      style={{ width: size, height: size }}
-      className={cn('text-primary', className)}
+    <Image
+      src={resolvedTheme === 'dark' ? '/icon-light.png' : '/icon-dark.png'}
+      alt="Bruce"
+      width={size}
+      height={size}
+      className={className}
+      priority
     />
   )
 }

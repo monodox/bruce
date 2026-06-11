@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   },
   description: 'Bruce Frontend Application',
   icons: {
-    icon: '/favicon.svg',
+    icon: '/favicon.png',
   },
 }
 

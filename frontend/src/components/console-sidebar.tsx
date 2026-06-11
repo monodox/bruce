@@ -12,9 +12,9 @@ import {
   Bell,
   BookOpen,
   Settings,
-  Shield,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { AppIcon } from '@/components/shared/app-icon'
 
 const navItems = [
   { href: '/console/overview', label: 'Overview', icon: LayoutDashboard },
@@ -35,7 +35,7 @@ export function ConsoleSidebar() {
     <aside className="hidden md:flex w-64 flex-col border-r bg-background">
       <div className="flex h-16 items-center gap-2 border-b px-6">
         <Link href="/console/overview" className="flex items-center gap-2">
-          <Shield className="h-6 w-6 text-primary" />
+          <AppIcon size={24} />
           <span className="text-lg font-bold">Bruce</span>
         </Link>
       </div>
