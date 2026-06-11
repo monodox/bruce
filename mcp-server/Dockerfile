@@ -11,4 +11,4 @@ WORKDIR /app/mcp-server
 RUN pnpm run build
 
 ENV NODE_ENV=production
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/http-server.js"]
