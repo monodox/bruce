@@ -75,4 +75,29 @@ router.get('/overview', (_req, res) => {
   })
 })
 
+// Get current user and workspace
+router.get('/user', (_req, res) => {
+  res.json({
+    user: {
+      id: 'usr_demo',
+      firstName: 'Alex',
+      lastName: 'Chen',
+      email: 'alex.chen@acme.io',
+      role: 'admin',
+      avatar: null,
+      createdAt: '2024-06-01T00:00:00.000Z',
+    },
+    workspace: {
+      id: 'ws_bruce',
+      name: 'Acme Corp',
+      slug: 'acme-corp',
+      plan: 'pro',
+      region: 'us-central1',
+      gcpProject: 'bruce-499005',
+      dynatraceEnv: 'ens66072',
+      createdAt: '2024-06-01T00:00:00.000Z',
+    },
+  })
+})
+
 export default router

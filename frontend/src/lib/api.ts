@@ -81,3 +81,29 @@ export async function triggerAlert(payload: {
 }): Promise<{ status: string; playbookId: string }> {
   return apiFetch('/webhooks/alert', { method: 'POST', body: payload })
 }
+
+// User & Workspace
+export interface User {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  role: string
+  avatar: string | null
+  createdAt: string
+}
+
+export interface Workspace {
+  id: string
+  name: string
+  slug: string
+  plan: string
+  region: string
+  gcpProject: string
+  dynatraceEnv: string
+  createdAt: string
+}
+
+export async function getUser(): Promise<{ user: User; workspace: Workspace }> {
+  return apiFetch<{ user: User; workspace: Workspace }>('/user')
+}

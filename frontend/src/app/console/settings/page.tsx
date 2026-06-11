@@ -1,53 +1,108 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
+import { getUser } from '@/lib/api'
 
-export const metadata = { title: 'Settings' }
+export const metadata = { title: 'Settings — Bruce' }
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  let user = { firstName: '', lastName: '', email: '', role: '', createdAt: '' }
+  let workspace = { name: '', slug: '', plan: '', region: '', gcpProject: '', dynatraceEnv: '' }
+
+  try {
+    const data = await getUser()
+    user = data.user
+    workspace = data.workspace
+  } catch {
+    // API unavailable
+  }
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold md:text-3xl">Settings</h1>
-        <p className="text-muted-foreground mt-1">Application configuration and preferences.</p>
+        <p className="text-muted-foreground mt-1">Account and workspace configuration.</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>General</CardTitle>
-          <CardDescription>Manage your workspace settings.</CardDescription>
+          <CardTitle>Profile</CardTitle>
+          <CardDescription>Your personal account details.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="workspace-name">Workspace Name</Label>
-            <Input id="workspace-name" placeholder="My Workspace" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">First name</label>
+              <Input defaultValue={user.firstName} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Last name</label>
+              <Input defaultValue={user.lastName} />
+            </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="workspace-url">Workspace URL</Label>
-            <Input id="workspace-url" placeholder="my-workspace.bruce.dev" disabled />
-            <p className="text-xs text-muted-foreground">Contact support to change your workspace URL.</p>
+            <label className="text-sm font-medium">Email</label>
+            <Input defaultValue={user.email} type="email" />
           </div>
-          <Button>Save Changes</Button>
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-medium">Role</label>
+            <Badge>{user.role || 'admin'}</Badge>
+          </div>
+          <Button>Save Profile</Button>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Notifications</CardTitle>
-          <CardDescription>Configure how you receive notifications.</CardDescription>
+          <CardTitle>Workspace</CardTitle>
+          <CardDescription>Your team workspace settings.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email-notifications">Email for Notifications</Label>
-            <Input id="email-notifications" type="email" placeholder="admin@company.com" />
+            <label className="text-sm font-medium">Workspace Name</label>
+            <Input defaultValue={workspace.name} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="slack-webhook">Slack Webhook URL</Label>
-            <Input id="slack-webhook" placeholder="https://hooks.slack.com/services/..." />
+            <label className="text-sm font-medium">Slug</label>
+            <Input defaultValue={workspace.slug} disabled />
           </div>
-          <Button>Update Notifications</Button>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Plan</label>
+              <div className="flex items-center gap-2">
+                <Input defaultValue={workspace.plan} disabled />
+                <Badge variant="secondary">{workspace.plan}</Badge>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Region</label>
+              <Input defaultValue={workspace.region} disabled />
+            </div>
+          </div>
+          <Button>Update Workspace</Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Integrations</CardTitle>
+          <CardDescription>Connected services and credentials.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">GCP Project</label>
+            <Input defaultValue={workspace.gcpProject} disabled />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Dynatrace Environment</label>
+            <Input defaultValue={workspace.dynatraceEnv ? `${workspace.dynatraceEnv}.live.dynatrace.com` : ''} disabled />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Gemini Model</label>
+            <Input defaultValue="gemini-3.5-flash" disabled />
+          </div>
         </CardContent>
       </Card>
 
