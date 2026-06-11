@@ -36,7 +36,6 @@ export async function getPlaybooks(): Promise<Playbook[]> {
   try {
     const snapshot = await getDb()
       .collection(COLLECTION)
-      .orderBy('createdAt', 'desc')
       .limit(50)
       .get()
 

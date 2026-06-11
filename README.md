@@ -114,3 +114,13 @@ Please see [SECURITY.md](SECURITY.md) for reporting vulnerabilities.
 - **Repository:** https://github.com/monodox/bruce
 - **Issues:** https://github.com/monodox/bruce/issues
 - **Discussions:** https://github.com/monodox/bruce/discussions
+
+## Live Deployment
+
+| Service | URL |
+|---------|-----|
+| Frontend (Console) | https://bruce-frontend-200902967092.us-central1.run.app |
+| Backend (API) | https://bruce-backend-200902967092.us-central1.run.app |
+| MCP Server | https://bruce-mcp-server-200902967092.us-central1.run.app |
+
+**GCP Project:** `bruce-499005` | **Region:** `us-central1` | **Dynatrace:** `ens66072.live.dynatrace.com`
