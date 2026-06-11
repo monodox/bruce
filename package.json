@@ -1,13 +1,23 @@
 {
   "name": "bruce",
   "private": true,
-  "workspaces": ["frontend", "backend"],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "packageManager": "pnpm@10.12.1",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "mcp-server",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "test": "turbo run test"
   },
   "devDependencies": {
-    "turbo": "^2.0.0"
+    "turbo": "^2.5.0"
   }
 }

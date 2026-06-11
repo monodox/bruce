@@ -1,48 +1,52 @@
-# Roadmap
+# Frontend Roadmap
 
-## Phase 1 — Foundation (Current)
+## Phase 1 — Foundation ✅
 
-- [x] Project setup (Next.js, TypeScript, Tailwind CSS)
-- [x] shadcn/ui integration
+- [x] Next.js 14 with App Router
+- [x] TypeScript strict mode
+- [x] Tailwind CSS + CSS variables (light/dark)
+- [x] shadcn/ui component library
 - [x] Lucide React icons
-- [x] Base UI components (Button, Card, Input, Badge, Avatar, Separator)
-- [x] Light/Dark theme support
-- [ ] Authentication (NextAuth.js)
-- [ ] API client setup
+- [x] Route groups (auth, console, legal)
+- [x] Layout components (AppLayout, ConsoleLayout)
+- [x] Base UI primitives (Button, Card, Input, Badge, Avatar, Separator)
 
-## Phase 2 — Core Features
+## Phase 2 — Console UI (In Progress)
 
-- [ ] User registration and login
-- [ ] Dashboard layout
-- [ ] Navigation (sidebar + header)
-- [ ] User profile page
-- [ ] Settings page
-- [ ] Responsive design polish
+- [ ] Overview dashboard (charts, metrics cards)
+- [ ] Agents list with status indicators
+- [ ] Traces timeline viewer
+- [ ] Anomaly detection timeline
+- [ ] Playbook viewer (markdown rendering)
+- [ ] Alert rules configuration UI
+- [ ] Token management (create, revoke, list)
+- [ ] Settings page (profile, preferences)
+- [ ] Console sidebar navigation (active states, icons)
 
-## Phase 3 — Advanced Features
+## Phase 3 — Auth & Data
 
-- [ ] Real-time notifications
-- [ ] Data tables with sorting/filtering
-- [ ] File upload support
-- [ ] Search functionality
-- [ ] Role-based access control
+- [ ] NextAuth.js integration
+- [ ] Login/signup form validation
+- [ ] API client (fetch wrapper with auth headers)
+- [ ] SWR/React Query for server state
+- [ ] Real-time updates (WebSocket or SSE)
+- [ ] Loading states and error boundaries
 
-## Phase 4 — Production Readiness
+## Phase 4 — Polish
 
-- [ ] Unit and integration tests
-- [ ] E2E tests (Playwright)
-- [ ] Performance optimization
-- [ ] SEO improvements
-- [ ] Error monitoring (Sentry)
-- [ ] Analytics integration
-- [ ] CI/CD pipeline
-- [ ] Docker setup
-- [ ] Production deployment
-
-## Phase 5 — Scale
-
-- [ ] Internationalization (i18n)
+- [ ] Responsive design (mobile/tablet)
+- [ ] Dark/light theme toggle
+- [ ] Keyboard shortcuts
+- [ ] Toast notifications
+- [ ] Breadcrumbs
+- [ ] Search (cmd+k)
 - [ ] Accessibility audit (WCAG 2.1 AA)
+
+## Phase 5 — Production
+
+- [ ] Unit tests (Vitest + Testing Library)
+- [ ] E2E tests (Playwright)
+- [ ] Bundle analysis and optimization
+- [ ] SEO meta tags
 - [ ] PWA support
-- [ ] API caching strategy
-- [ ] Documentation site
+- [ ] Analytics integration

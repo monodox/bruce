@@ -1,6 +1,6 @@
-# Bruce Frontend
+# @bruce/frontend
 
-A modern web application built with Next.js, React, TypeScript, Tailwind CSS, shadcn/ui, and Lucide React.
+The web console for [Bruce](https://github.com/monodox/bruce) — an open-source AI Observability Copilot.
 
 ## Tech Stack
 
@@ -14,36 +14,32 @@ A modern web application built with Next.js, React, TypeScript, Tailwind CSS, sh
 
 ### Prerequisites
 
-- Node.js 18.17 or later
-- npm, yarn, or pnpm
+- Node.js 24+
+- pnpm 10+
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/bruce.git
-cd bruce/frontend
+# From the monorepo root
+git clone https://github.com/monodox/bruce.git
+cd bruce
+pnpm install
 
-# Install dependencies
-npm install
-
-# Copy environment variables
-cp .env.example .env.local
-
-# Start the development server
-npm run dev
+# Or run frontend only
+cd frontend
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Scripts
 
-| Command         | Description                |
-| --------------- | -------------------------- |
-| `npm run dev`   | Start development server   |
-| `npm run build` | Build for production       |
-| `npm run start` | Start production server    |
-| `npm run lint`  | Run ESLint                 |
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production |
+| `pnpm start` | Start production server |
+| `pnpm lint` | Run ESLint |
 
 ## Project Structure
 
@@ -64,24 +60,24 @@ src/
 │   ├── console-header.tsx   # Console header
 │   └── console-sidebar.tsx  # Console sidebar
 └── lib/
-    └── utils.ts        # Utility functions
+    └── utils.ts        # Utility functions (cn helper)
 ```
 
 ## Routes
 
 | Route | Description |
-| --- | --- |
+|-------|-------------|
 | `/` | Redirects to `/auth/login` |
 | `/auth/login` | Login page |
 | `/auth/signup` | Sign up page |
 | `/auth/forgot` | Forgot password |
 | `/auth/reset` | Reset password |
-| `/console/overview` | Console dashboard |
+| `/console/overview` | Dashboard overview |
 | `/console/agents` | Agent management |
 | `/console/alerts` | Alert rules |
 | `/console/anomalies` | Anomaly detection |
 | `/console/diagnose` | Root cause analysis |
-| `/console/playbooks` | Automated playbooks |
+| `/console/playbooks` | Automated fix playbooks |
 | `/console/settings` | App settings |
 | `/console/tokens` | API tokens |
 | `/console/traces` | Distributed traces |
@@ -91,12 +87,8 @@ src/
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
-## Security
-
-Please see [SECURITY.md](SECURITY.md) for reporting vulnerabilities.
+MIT — see [LICENSE](LICENSE).

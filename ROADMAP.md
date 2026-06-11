@@ -1,49 +1,61 @@
 # Roadmap
 
-## Phase 1 — Foundation (Current)
+## Phase 1 — Foundation ✅
 
-- [x] Project setup (Next.js, TypeScript, Tailwind CSS)
-- [x] shadcn/ui integration
-- [x] Lucide React icons
-- [x] Base UI components (Button, Card, Input, Badge, Avatar, Separator)
-- [x] Light/Dark theme support
+- [x] Monorepo setup (pnpm + Turborepo)
+- [x] Next.js 14 frontend with shadcn/ui
+- [x] Express backend with webhook endpoint
+- [x] MCP Server scaffold with `@modelcontextprotocol/sdk`
+- [x] GCP Agent Builder system instructions
+- [x] Docker Compose for local development
+- [x] OpenTelemetry collector config (Bindplane)
+- [x] Dynatrace dashboard export
+- [x] Terraform scaffolding for GCP
+- [x] CI/CD workflows (GitHub Actions)
 - [x] Project documentation
-- [ ] Authentication (NextAuth.js)
-- [ ] API client setup
 
-## Phase 2 — Core Features
+## Phase 2 — MCP Server (In Progress)
 
-- [ ] User registration and login
-- [ ] Dashboard layout
-- [ ] Navigation (sidebar + header)
-- [ ] User profile page
-- [ ] Settings page
-- [ ] Responsive design polish
+- [ ] Wire Dynatrace API calls (DQL queries) into MCP tools
+- [ ] Add `get_anomalies` tool
+- [ ] Add `get_agent_health` tool
+- [ ] Add `get_playbook_history` tool
+- [ ] Integration tests for MCP tools
+- [ ] Publish as standalone npm package
 
-## Phase 3 — Advanced Features
+## Phase 3 — Agent & Backend
 
-- [ ] Real-time notifications
-- [ ] Data tables with sorting/filtering
-- [ ] File upload support
-- [ ] Search functionality
-- [ ] Role-based access control
+- [ ] Connect Agent Builder to MCP Server via Cloud Run
+- [ ] Implement playbook generation (Gemini)
+- [ ] Firestore storage for playbooks
+- [ ] Webhook trigger from Bindplane alerts → backend → agent
+- [ ] Authentication (API tokens + NextAuth)
+- [ ] Rate limiting and error handling
 
-## Phase 4 — Production Readiness
+## Phase 4 — Frontend Console
 
-- [ ] Unit and integration tests
-- [ ] E2E tests (Playwright)
-- [ ] Performance optimization
-- [ ] SEO improvements
-- [ ] Error monitoring (Sentry)
-- [ ] Analytics integration
-- [ ] CI/CD pipeline
-- [ ] Docker setup
-- [ ] Production deployment
+- [ ] Real-time overview dashboard (traces, token spend, error rates)
+- [ ] Agent management UI
+- [ ] Playbook viewer and executor
+- [ ] Anomaly timeline visualization
+- [ ] Alert configuration UI
+- [ ] Settings and token management
+- [ ] Dark/light theme toggle
 
-## Phase 5 — Scale
+## Phase 5 — SDKs & Ecosystem
 
-- [ ] Internationalization (i18n)
-- [ ] Accessibility audit (WCAG 2.1 AA)
-- [ ] PWA support
-- [ ] API caching strategy
-- [ ] Documentation site
+- [ ] `@bruce/sdk-node` — Node.js agent instrumentation
+- [ ] `@bruce/sdk-python` — Python agent instrumentation
+- [ ] `@bruce/shared-types` — Shared TypeScript interfaces
+- [ ] CLI tool for local debugging
+- [ ] VS Code / Kiro extension
+
+## Phase 6 — Production & Scale
+
+- [ ] Multi-tenant support
+- [ ] RBAC (role-based access control)
+- [ ] Audit logging
+- [ ] Horizontal scaling (Cloud Run auto-scaling)
+- [ ] Performance benchmarks
+- [ ] SOC 2 / compliance readiness
+- [ ] Public documentation site

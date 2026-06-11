@@ -1,10 +1,10 @@
 # Contributing to Bruce
 
-Thank you for your interest in contributing! Here's how you can help.
+Thank you for your interest in contributing to Bruce! This is an open-source project and we welcome contributions of all kinds.
 
 ## Getting Started
 
-1. Fork the repository
+1. Fork the repository at https://github.com/monodox/bruce
 2. Clone your fork: `git clone https://github.com/your-username/bruce.git`
 3. Create a branch: `git checkout -b feature/your-feature-name`
 4. Install dependencies: `pnpm install`
@@ -14,14 +14,31 @@ Thank you for your interest in contributing! Here's how you can help.
 8. Build the project: `pnpm build`
 9. Commit your changes: `git commit -m "feat: add your feature"`
 10. Push to your fork: `git push origin feature/your-feature-name`
-11. Open a Pull Request
+11. Open a Pull Request against `main`
 
 ## Development Setup
 
 ```bash
+git clone https://github.com/monodox/bruce.git
+cd bruce
 pnpm install
 cp .env.example .env.local
 pnpm dev
+```
+
+## Monorepo Structure
+
+Bruce is a pnpm + Turborepo monorepo. Each package can be developed independently:
+
+```bash
+# Frontend only
+cd frontend && pnpm dev
+
+# Backend only
+cd backend && pnpm dev
+
+# MCP Server only
+cd mcp-server && pnpm dev
 ```
 
 ## Branch Naming
@@ -57,17 +74,22 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 - TypeScript strict mode
 - Single quotes, no semicolons
 - Use functional patterns where possible
-- Use Tailwind CSS for styling
-- Use shadcn/ui components when applicable
-- Add Lucide React icons where appropriate
+- Use Tailwind CSS for styling (frontend)
+- Use shadcn/ui components when applicable (frontend)
+- Add Lucide React icons where appropriate (frontend)
 
 ## Reporting Bugs
 
-Open an issue with:
+Open an issue at https://github.com/monodox/bruce/issues with:
 - Clear title and description
 - Steps to reproduce
 - Expected vs actual behavior
 - Screenshots if applicable
+- Environment details (OS, Node version, browser)
+
+## Feature Requests
+
+Open a discussion at https://github.com/monodox/bruce/discussions with your proposal. We love hearing ideas from the community.
 
 ## Code of Conduct
 

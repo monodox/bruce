@@ -2,17 +2,24 @@
   "name": "@bruce/mcp-server",
   "version": "1.0.0",
   "private": true,
-  "description": "MCP Server for Dynatrace observability",
+  "description": "MCP Server for Dynatrace observability — bridges Dynatrace API to AI agents",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.ts",
-    "start": "node dist/index.js"
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "eslint src/"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0"
+  },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "ts-node": "^10.9.1",
-    "@types/node": "^20.0.0"
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.3"
   }
 }

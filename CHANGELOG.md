@@ -8,25 +8,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- Initialization of `mcp-server` directory using `@modelcontextprotocol/sdk` to act as an bridge to Dynatrace.
-- Setup of `agent-builder` with system instructions for the Gemini diagnostic agent.
-- Scaffolding for `packages/sdk-node` and `packages/sdk-python` OpenTelemetry wrappers.
-- Initialization of Express backend to receive webhook events.
-- Updated documentation across monorepo packages (added `AGENTS.md` guidelines).
+- MCP Server (`@bruce/mcp-server`) using `@modelcontextprotocol/sdk` as a bridge to Dynatrace API
+- GCP Agent Builder system instructions for the Gemini diagnostic agent
+- Scaffolding for `packages/sdk-node` and `packages/sdk-python` OpenTelemetry wrappers
+- Express backend with webhook endpoint for Bindplane alerts
+- Docker Compose for full-stack local development (frontend, backend, MCP server, OTel collector)
+- GitHub Actions workflows (CodeQL, dependency review, stale issues)
+- Infrastructure configs (Terraform for GCP, Bindplane pipelines, Dynatrace dashboards)
+- Comprehensive documentation (AGENTS.md, ARCHITECTURE.md)
 
 ## [0.2.0] - 2024-06-09
 
 ### Changed
 
-- Transitioned the project to an observability copilot architecture based on hackathon requirements.
-- Updated the monorepo workspace to include `mcp-server` and `packages/*`.
-- Replaced `.gitkeep` with structured scaffolding in `backend` and `infra`.
+- Transitioned to AI observability copilot architecture
+- Monorepo workspace expanded to include `mcp-server` and `packages/*`
+- Backend scaffolded with Express and webhook routes
+- Frontend restructured with `auth`, `console`, and `legal` route groups
 
-## [0.1.0] - 2024-01-01
+## [0.1.0] - 2024-06-01
 
 ### Added
 
-- Project scaffolding
-- Monorepo structure with Next.js frontend package
+- Initial project scaffolding
+- pnpm + Turborepo monorepo structure
+- Next.js 14 frontend with shadcn/ui components
+- Tailwind CSS with light/dark theme
 - Base configuration files
-- Core UI components (shadcn/ui)
+
+[Unreleased]: https://github.com/monodox/bruce/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/monodox/bruce/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/monodox/bruce/releases/tag/v0.1.0

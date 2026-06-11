@@ -4,7 +4,7 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.1.x   | :white_check_mark: |
+| 0.x.x   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
@@ -13,7 +13,7 @@ We take security seriously. If you discover a security vulnerability, please rep
 ### How to Report
 
 1. **Do not** open a public GitHub issue for security vulnerabilities.
-2. Email us at **security@bruce.dev** with details of the vulnerability.
+2. Email us at **security@monodox.com** with details of the vulnerability.
 3. Include the following in your report:
    - Description of the vulnerability
    - Steps to reproduce
