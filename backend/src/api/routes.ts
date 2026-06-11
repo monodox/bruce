@@ -1,16 +1,16 @@
 import { Router } from 'express'
+import type { Request, Response } from 'express'
 import { generatePlaybook } from '../services/gemini.js'
 import { savePlaybook, getPlaybooks, getPlaybookById } from '../services/firestore.js'
 
-export const apiRoutes = Router()
+const router: ReturnType<typeof Router> = Router()
 
 // Webhook from Bindplane/Dynatrace alerts
-apiRoutes.post('/webhooks/alert', async (req, res) => {
+router.post('/webhooks/alert', async (req, res) => {
   const payload = req.body
   console.log('Alert received:', JSON.stringify(payload, null, 2))
 
   try {
-    // Generate a playbook using Gemini
     const playbook = await generatePlaybook({
       alertTitle: payload.title || 'Unknown Alert',
       alertSeverity: payload.severity || 'WARNING',
@@ -18,9 +18,7 @@ apiRoutes.post('/webhooks/alert', async (req, res) => {
       timestamp: new Date().toISOString(),
     })
 
-    // Save to Firestore
     const saved = await savePlaybook(playbook)
-
     res.status(202).json({ status: 'accepted', playbookId: saved.id })
   } catch (error) {
     console.error('Error processing alert:', error)
@@ -29,7 +27,7 @@ apiRoutes.post('/webhooks/alert', async (req, res) => {
 })
 
 // Get all playbooks
-apiRoutes.get('/playbooks', async (_req, res) => {
+router.get('/playbooks', async (_req, res) => {
   try {
     const playbooks = await getPlaybooks()
     res.json({ playbooks })
@@ -40,7 +38,7 @@ apiRoutes.get('/playbooks', async (_req, res) => {
 })
 
 // Get single playbook
-apiRoutes.get('/playbooks/:id', async (req, res) => {
+router.get('/playbooks/:id', async (req, res) => {
   try {
     const playbook = await getPlaybookById(req.params.id)
     if (!playbook) {
@@ -55,7 +53,7 @@ apiRoutes.get('/playbooks/:id', async (req, res) => {
 })
 
 // Get agents list
-apiRoutes.get('/agents', (_req, res) => {
+router.get('/agents', (_req, res) => {
   res.json({
     agents: [
       { id: 'code-review-agent', name: 'Code Review Agent', status: 'active' },
@@ -66,7 +64,7 @@ apiRoutes.get('/agents', (_req, res) => {
 })
 
 // Get overview metrics
-apiRoutes.get('/overview', (_req, res) => {
+router.get('/overview', (_req, res) => {
   res.json({
     totalAgents: 3,
     activeAlerts: 2,
@@ -76,3 +74,5 @@ apiRoutes.get('/overview', (_req, res) => {
     avgLatency: 2340,
   })
 })
+
+export default router

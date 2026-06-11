@@ -1,4 +1,4 @@
-import { ConsoleLayout } from '@/components/console'
+import { ConsoleLayout } from '@/components/console-layout'
 
 export default function ConsoleRootLayout({
   children,
