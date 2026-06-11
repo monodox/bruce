@@ -1,30 +1,28 @@
-# AGENTS.md
+# AGENTS.md — MCP Server
 
 ## Setup commands
-- Install deps: `pnpm install`
-- Start dev server: `pnpm dev`
-- Run tests: `pnpm test`
+- Install deps: `pnpm install` (from monorepo root)
+- Start dev: `pnpm dev`
+- Build: `pnpm build`
+- Start production: `pnpm start`
+
+## Requirements
+- Node.js 24+
+- pnpm 10+
 
 ## Code style
 - TypeScript strict mode
 - Single quotes, no semicolons
+- ES Modules (`"type": "module"`)
 - Use functional patterns where possible
 
-## Dev environment tips
-- Use `pnpm dlx turbo run where <project_name>` to jump to a package instead of scanning with `ls`.
-- Run `pnpm install --filter <project_name>` to add the package to your workspace so Vite, ESLint, and TypeScript can see it.
-- Use `pnpm create vite@latest <project_name> -- --template react-ts` to spin up a new React + Vite package with TypeScript checks ready.
-- Check the name field inside each package's package.json to confirm the right name—skip the top-level one.
+## Environment variables
+- `DYNATRACE_ENV_URL` — Dynatrace environment URL
+- `DYNATRACE_API_TOKEN` — Dynatrace API token with read scopes
 
-## Testing instructions
-- Find the CI plan in the .github/workflows folder.
-- Run `pnpm turbo run test --filter <project_name>` to run every check defined for that package.
-- From the package root you can just call `pnpm test`. The commit should pass all tests before you merge.
-- To focus on one step, add the Vitest pattern: `pnpm vitest run -t "<test name>"`.
-- Fix any test or type errors until the whole suite is green.
-- After moving files or changing imports, run `pnpm lint --filter <project_name>` to be sure ESLint and TypeScript rules still pass.
-- Add or update tests for the code you change, even if nobody asked.
-
-## PR instructions
-- Title format: [<project_name>] <Title>
-- Always run `pnpm lint` and `pnpm test` before committing.
+## Architecture
+- Uses `@modelcontextprotocol/sdk` for MCP protocol
+- Communicates via STDIO transport
+- Bridges Dynatrace REST API to AI agents
+- Tools: get_failing_traces, get_token_metrics, get_problems, get_agent_health
+- Falls back to mock data when Dynatrace is not configured

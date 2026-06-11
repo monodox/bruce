@@ -1,4 +1,5 @@
 steps:
+  # Build frontend
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
@@ -8,5 +9,30 @@ steps:
       - 'frontend/Dockerfile'
       - '.'
 
+  # Build backend
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/bruce-backend'
+      - '-f'
+      - 'backend/Dockerfile'
+      - '.'
+
+  # Build MCP server
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/bruce-mcp-server'
+      - '-f'
+      - 'mcp-server/Dockerfile'
+      - '.'
+
 images:
   - 'gcr.io/$PROJECT_ID/bruce-frontend'
+  - 'gcr.io/$PROJECT_ID/bruce-backend'
+  - 'gcr.io/$PROJECT_ID/bruce-mcp-server'
+
+options:
+  machineType: 'E2_HIGHCPU_8'

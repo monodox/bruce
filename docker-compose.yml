@@ -8,7 +8,9 @@ services:
     ports:
       - "3000:3000"
     environment:
+      - NEXT_PUBLIC_APP_NAME=Bruce
       - NEXT_PUBLIC_API_URL=http://backend:8080/api
+      - HOSTNAME=0.0.0.0
     depends_on:
       - backend
 
@@ -20,8 +22,12 @@ services:
       - "8080:8080"
     environment:
       - PORT=8080
+      - GOOGLE_CLOUD_PROJECT=bruce-499005
+      - GEMINI_MODEL=gemini-3.5-flash
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
       - DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL}
       - DYNATRACE_API_TOKEN=${DYNATRACE_API_TOKEN}
+      - FIRESTORE_DATABASE=(default)
 
   mcp-server:
     build:
@@ -31,14 +37,13 @@ services:
       - DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL}
       - DYNATRACE_API_TOKEN=${DYNATRACE_API_TOKEN}
 
-  # Local OpenTelemetry Collector for testing Bindplane pipelines locally
   otel-collector:
     image: otel/opentelemetry-collector-contrib:latest
     volumes:
       - ./infra/bindplane/pipeline.yaml:/etc/otelcol-contrib/config.yaml
     ports:
-      - "4317:4317" # OTLP gRPC receiver
-      - "4318:4318" # OTLP HTTP receiver
+      - "4317:4317"
+      - "4318:4318"
     environment:
       - DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL}
       - DYNATRACE_API_TOKEN=${DYNATRACE_API_TOKEN}

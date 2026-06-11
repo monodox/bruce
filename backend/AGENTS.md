@@ -1,30 +1,41 @@
-# AGENTS.md
+# AGENTS.md — Backend
 
 ## Setup commands
-- Install deps: `pnpm install`
-- Start dev server: `pnpm dev`
-- Run tests: `pnpm test`
+- Install deps: `pnpm install` (from monorepo root)
+- Start dev: `pnpm dev`
+- Build: `pnpm build`
+- Start production: `pnpm start`
+
+## Requirements
+- Node.js 24+
+- pnpm 10+
 
 ## Code style
 - TypeScript strict mode
 - Single quotes, no semicolons
+- ES Modules (`"type": "module"`)
 - Use functional patterns where possible
 
-## Dev environment tips
-- Use `pnpm dlx turbo run where <project_name>` to jump to a package instead of scanning with `ls`.
-- Run `pnpm install --filter <project_name>` to add the package to your workspace so Vite, ESLint, and TypeScript can see it.
-- Use `pnpm create vite@latest <project_name> -- --template react-ts` to spin up a new React + Vite package with TypeScript checks ready.
-- Check the name field inside each package's package.json to confirm the right name—skip the top-level one.
+## Environment variables
+- `PORT` — Server port (default 8080)
+- `GOOGLE_CLOUD_PROJECT` — GCP project ID (bruce-499005)
+- `GEMINI_API_KEY` — Google Gemini API key
+- `GEMINI_MODEL` — Gemini model (default gemini-3.5-flash)
+- `FIRESTORE_DATABASE` — Firestore database ID
+- `DYNATRACE_ENV_URL` — Dynatrace environment URL
+- `DYNATRACE_API_TOKEN` — Dynatrace API token
 
-## Testing instructions
-- Find the CI plan in the .github/workflows folder.
-- Run `pnpm turbo run test --filter <project_name>` to run every check defined for that package.
-- From the package root you can just call `pnpm test`. The commit should pass all tests before you merge.
-- To focus on one step, add the Vitest pattern: `pnpm vitest run -t "<test name>"`.
-- Fix any test or type errors until the whole suite is green.
-- After moving files or changing imports, run `pnpm lint --filter <project_name>` to be sure ESLint and TypeScript rules still pass.
-- Add or update tests for the code you change, even if nobody asked.
+## Architecture
+- Express 5 REST API
+- Receives alert webhooks from Bindplane/Dynatrace
+- Generates fix playbooks via Gemini (gemini-3.5-flash)
+- Stores playbooks in Firestore
+- Serves playbook data to frontend
 
-## PR instructions
-- Title format: [<project_name>] <Title>
-- Always run `pnpm lint` and `pnpm test` before committing.
+## API Endpoints
+- `GET /health` — Health check
+- `POST /api/webhooks/alert` — Receive alert, generate playbook
+- `GET /api/playbooks` — List all playbooks
+- `GET /api/playbooks/:id` — Get single playbook
+- `GET /api/agents` — List monitored agents
+- `GET /api/overview` — Dashboard metrics

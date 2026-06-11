@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Bruce MCP Server API
+  description: Dynatrace observability tools for the Bruce diagnostic agent
+  version: 1.0.0
+servers:
+  - url: https://bruce-mcp-server-200902967092.us-central1.run.app
+paths:
+  /tools/get_failing_traces:
+    post:
+      operationId: get_failing_traces
+      summary: Retrieve OpenTelemetry traces for agent runs that ended in errors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timeframe:
+                  type: string
+                  description: 'Timeframe to query (e.g., "now-15m", "now-1h", "now-24h")'
+      responses:
+        '200':
+          description: Trace data from Dynatrace
+          content:
+            application/json:
+              schema:
+                type: object
+  /tools/get_token_metrics:
+    post:
+      operationId: get_token_metrics
+      summary: Retrieve LLM token spend metrics for a specific agent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - agentId
+              properties:
+                agentId:
+                  type: string
+                  description: The ID or name of the agent to query
+                timeframe:
+                  type: string
+                  description: 'Timeframe to query (e.g., "now-1h", "now-24h")'
+      responses:
+        '200':
+          description: Token metrics from Dynatrace
+          content:
+            application/json:
+              schema:
+                type: object
+  /tools/get_problems:
+    post:
+      operationId: get_problems
+      summary: Retrieve active problems and anomalies from Dynatrace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [OPEN, CLOSED]
+                  description: Problem status filter
+      responses:
+        '200':
+          description: Problem data from Dynatrace
+          content:
+            application/json:
+              schema:
+                type: object
+  /tools/get_agent_health:
+    post:
+      operationId: get_agent_health
+      summary: Get health status and activity summary for a specific agent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - agentId
+              properties:
+                agentId:
+                  type: string
+                  description: The ID or name of the agent
+      responses:
+        '200':
+          description: Agent health data
+          content:
+            application/json:
+              schema:
+                type: object
