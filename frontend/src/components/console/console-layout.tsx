@@ -3,12 +3,12 @@ import { ConsoleHeader } from './console-header'
 
 export function ConsoleLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen">
+    <div className="min-h-screen">
       <ConsoleSidebar />
-      <div className="flex flex-1 flex-col">
-        <ConsoleHeader />
-        <main className="flex-1 p-6">{children}</main>
-      </div>
+      <ConsoleHeader />
+      <main className="pt-[65px] md:pl-64">
+        <div className="p-4 md:p-6">{children}</div>
+      </main>
     </div>
   )
 }
