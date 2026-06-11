@@ -10,10 +10,12 @@ export const metadata = { title: 'Login' }
 
 export default async function LoginPage() {
   let email = ''
+  let password = ''
 
   try {
     const data = await getUser()
     email = data.user.email
+    password = data.user.password
   } catch {
     // API unavailable
   }
@@ -58,6 +60,7 @@ export default async function LoginPage() {
             <Input
               id="password"
               type="password"
+              defaultValue={password}
               placeholder="Enter your password"
               autoComplete="current-password"
             />

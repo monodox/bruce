@@ -7,7 +7,7 @@ import { getAgents } from '@/lib/api'
 export const metadata = { title: 'Agents — Bruce' }
 
 export default async function AgentsPage() {
-  let agents: { id: string; name: string; status: string }[] = []
+  let agents: { id: string; name: string; status: string; lastSeen: string; totalTokens: number; errorRate: number; avgLatency: number }[] = []
 
   try {
     const data = await getAgents()
@@ -72,33 +72,43 @@ export default async function AgentsPage() {
       <Card>
         <CardHeader>
           <CardTitle>All Agents</CardTitle>
-          <CardDescription>Registered agents and their current health status.</CardDescription>
+          <CardDescription>Registered agents with health metrics from Dynatrace.</CardDescription>
         </CardHeader>
         <CardContent>
-          {agents.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-8 text-center">No agents registered yet. Add your first agent to get started.</p>
-          ) : (
-            <div className="space-y-4">
-              {agents.map((agent) => (
-                <div key={agent.id} className="flex items-center gap-4 rounded-md border p-4">
-                  <CircleDot className={`h-4 w-4 ${
+          <div className="space-y-3">
+            <div className="hidden md:grid grid-cols-6 gap-4 text-xs font-medium text-muted-foreground border-b pb-2">
+              <span>Agent</span>
+              <span>Status</span>
+              <span>Tokens Today</span>
+              <span>Error Rate</span>
+              <span>Avg Latency</span>
+              <span>Last Seen</span>
+            </div>
+            {agents.map((agent) => (
+              <div key={agent.id} className="grid grid-cols-1 md:grid-cols-6 gap-2 md:gap-4 items-center py-3 border-b last:border-0">
+                <div className="flex items-center gap-2">
+                  <CircleDot className={`h-3 w-3 ${
                     agent.status === 'active' ? 'text-green-500' :
                     agent.status === 'degraded' ? 'text-yellow-500' : 'text-muted-foreground'
                   }`} />
-                  <div className="flex-1">
+                  <div>
                     <p className="text-sm font-medium">{agent.name}</p>
-                    <p className="text-xs text-muted-foreground font-mono">{agent.id}</p>
+                    <p className="text-xs text-muted-foreground font-mono md:hidden">{agent.id}</p>
                   </div>
-                  <Badge variant={
-                    agent.status === 'active' ? 'default' :
-                    agent.status === 'degraded' ? 'secondary' : 'outline'
-                  }>
-                    {agent.status}
-                  </Badge>
                 </div>
-              ))}
-            </div>
-          )}
+                <Badge variant={
+                  agent.status === 'active' ? 'default' :
+                  agent.status === 'degraded' ? 'secondary' : 'outline'
+                }>
+                  {agent.status}
+                </Badge>
+                <span className="text-sm">{agent.totalTokens.toLocaleString()}</span>
+                <span className="text-sm">{(agent.errorRate * 100).toFixed(1)}%</span>
+                <span className="text-sm">{agent.avgLatency}ms</span>
+                <span className="text-xs text-muted-foreground">{new Date(agent.lastSeen).toLocaleTimeString()}</span>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>

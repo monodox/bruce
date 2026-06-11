@@ -1,62 +1,60 @@
-import { Route, Search, Filter } from 'lucide-react'
+import { Route } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Badge } from '@/components/ui/badge'
+import { getTraces } from '@/lib/api'
 
-export const metadata = { title: 'Traces' }
+export const metadata = { title: 'Traces — Bruce' }
 
-export default function TracesPage() {
+export default async function TracesPage() {
+  let traces: { traceId: string; agentName: string; operation: string; status: string; duration: number; timestamp: string; spans: number }[] = []
+  let total = 0
+
+  try {
+    const data = await getTraces()
+    traces = data.traces
+    total = data.total
+  } catch {
+    // API unavailable
+  }
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold md:text-3xl">Traces</h1>
-        <p className="text-muted-foreground mt-1">View and inspect distributed traces.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold md:text-3xl">Traces</h1>
+          <p className="text-muted-foreground mt-1">Distributed traces across all agents.</p>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Route className="h-4 w-4" />
+          <span>{total.toLocaleString()} total today</span>
+        </div>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Search Traces</CardTitle>
-          <CardDescription>Filter traces by service, operation, or trace ID.</CardDescription>
+          <CardTitle>Recent Traces</CardTitle>
+          <CardDescription>Latest distributed traces with status and duration.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input className="pl-9" placeholder="Search by trace ID, service, or operation..." />
+          <div className="space-y-3">
+            <div className="hidden sm:grid grid-cols-6 gap-4 text-xs font-medium text-muted-foreground border-b pb-2">
+              <span>Trace ID</span>
+              <span>Agent</span>
+              <span>Operation</span>
+              <span>Duration</span>
+              <span>Spans</span>
+              <span>Status</span>
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline">
-                <Filter className="mr-2 h-4 w-4" />
-                Filter
-              </Button>
-              <Button>Search</Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <CardTitle>Recent Traces</CardTitle>
-            <CardDescription>Latest distributed traces across services.</CardDescription>
-          </div>
-          <div className="flex items-center gap-2">
-            <Route className="h-4 w-4 text-muted-foreground" />
-            <Skeleton className="h-4 w-28" />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-                <Skeleton className="h-4 w-20 font-mono" />
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-4 w-36 hidden md:block" />
-                <Skeleton className="h-4 w-14" />
-                <Skeleton className="h-5 w-12 rounded-full" />
-                <Skeleton className="ml-auto h-3 w-12" />
+            {traces.map((trace) => (
+              <div key={trace.traceId} className="grid grid-cols-1 sm:grid-cols-6 gap-2 sm:gap-4 items-center py-2 border-b last:border-0">
+                <span className="font-mono text-xs">{trace.traceId}</span>
+                <span className="text-sm">{trace.agentName}</span>
+                <span className="text-sm text-muted-foreground">{trace.operation}</span>
+                <span className="text-sm">{trace.duration}ms</span>
+                <span className="text-sm">{trace.spans}</span>
+                <Badge variant={trace.status === 'error' ? 'destructive' : 'default'}>
+                  {trace.status}
+                </Badge>
               </div>
             ))}
           </div>
