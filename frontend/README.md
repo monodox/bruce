@@ -49,11 +49,45 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ```
 src/
-├── app/            # Next.js App Router pages and layouts
+├── app/
+│   ├── auth/           # Login, signup, forgot & reset password
+│   ├── console/        # Main app console (overview, agents, alerts, anomalies, diagnose, playbooks, settings, tokens, traces)
+│   ├── legal/          # Terms, cookies, privacy
+│   ├── layout.tsx      # Root layout
+│   └── page.tsx        # Redirects to /auth/login
 ├── components/
-│   └── ui/         # shadcn/ui components
-└── lib/            # Utility functions
+│   ├── ui/             # shadcn/ui primitives
+│   ├── app-layout.tsx  # Header + footer layout (auth, legal)
+│   ├── app-header.tsx  # Site header
+│   ├── app-footer.tsx  # Site footer
+│   ├── console-layout.tsx   # Sidebar + header layout (console)
+│   ├── console-header.tsx   # Console header
+│   └── console-sidebar.tsx  # Console sidebar
+└── lib/
+    └── utils.ts        # Utility functions
 ```
+
+## Routes
+
+| Route | Description |
+| --- | --- |
+| `/` | Redirects to `/auth/login` |
+| `/auth/login` | Login page |
+| `/auth/signup` | Sign up page |
+| `/auth/forgot` | Forgot password |
+| `/auth/reset` | Reset password |
+| `/console/overview` | Console dashboard |
+| `/console/agents` | Agent management |
+| `/console/alerts` | Alert rules |
+| `/console/anomalies` | Anomaly detection |
+| `/console/diagnose` | Root cause analysis |
+| `/console/playbooks` | Automated playbooks |
+| `/console/settings` | App settings |
+| `/console/tokens` | API tokens |
+| `/console/traces` | Distributed traces |
+| `/legal/terms` | Terms of service |
+| `/legal/cookies` | Cookie policy |
+| `/legal/privacy` | Privacy policy |
 
 ## Contributing
 
